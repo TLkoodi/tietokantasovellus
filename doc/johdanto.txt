@@ -1,0 +1,13 @@
+Järjestelmän tehtävänä on toimia tietokantana drinkeille.
+
+Tietokannasta voidaan hakea eri drinkkejä hakusanojen perusteella, hakusanana voi toimia esimerkiksi drinkin nimi, lempinimi, tai ainesosa.
+
+Järjestelmään kirjaudutaan. Käyttäjät voivat asemansa perusteella joko hakea drinkkejä, ehdottaa uusia tai lisätä drinkkejä tietokantaan.
+
+Työ toteutetaan laitoksen users-palvelimella.
+
+Järjestelmä toteutetaan PHP-pohjaisesti.
+
+Ohjelma käyttää vain sille erikseen luotua tietokantaa.
+
+

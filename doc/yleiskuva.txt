@@ -1,0 +1,64 @@
+Käyttäjäryhmät: 
+
+Jokamies
+ Henkilö joka on saapunut järjestelmän web-sivulle.
+
+Käyttäjä
+  Rekisteröitynyt käyttäjä, voi olla kuka tahansa.
+
+Luotettu käyttäjä
+ Rekisteröitynyt käyttäjä, jolle ylläpitäjä on antanut suoran reseptien lisäysoikeuden.
+
+Ylläpitäjä
+ Henkilö, joka hallinnoi järjestelmää.
+
+Käyttötapauskuvaukset:
+Käyttäjätunnuksen luominen
+Tunnuksille kirjautuminen
+Käyttäjätietojen muutos
+Hae resepti
+Sisäänkirjautuminen
+Reseptin ehdottaminen
+Reseptin lisäys lomakkeella
+Reseptin lisäys tekstitiedostosta
+Ehdotuksen hyväksyminen
+Oikeuksien hallinta
+
+Jokamiehen käyttötapaukset:
+rekisteröityminen, kirjautuminen
+
+Käyttäjän käyttötapaukset:
+
+ Reseptin haku:
+  Käyttäjä voi hakea reseptin tietokannasta valitsemallaan hakusanalla. Käyttäjälle näytetään hakutulokset.
+Esimerkki: "Mitkä drinkit sisältävät Koskenkorvaa?"
+
+Reseptin ehdottaminen:
+ Käyttäjä voi syöttää lisättävän drinkin tiedot lomakkeesseen. Jos ylläpitäjä hyväksyy ehdotuksen, lisätään drinkin tiedot järjestelmään. 
+
+Käyttäjätietojen muutos:
+Käyttäjä voi muokata tietojaan ja poistaa tunnuksensa.
+
+Muita käyttötapauksia: uloskirjautuminen
+
+Luotetun käyttäjän käyttötapaukset:
+
+Reseptin lisäys lomakkeella:
+
+Käyttäjä voi syöttää lisättävän drinkin tiedot lomakkeeseen. Drinkin tiedot siirtyvät järjestelmään.
+
+muita käyttötapauksia: reseptin haku, käyttäjätietojen muutos, uloskirjautuminen
+
+
+Ylläpitäjän käyttötapaukset:
+Ehdotuksien hyväksyminen:
+Ylläpitäjä voi tarkastella käyttäjien ehdottamia drinkkejä. Ylläpitäjä voi hylätä ehdotuksen, jolloin se poistetaan, tai hyväksyä ehdotuksen, jolloin uusi drinkki lisätään järjestelmään.
+
+Oikeuksien hallinta:
+Ylläpitäjä voi muuttaa käyttäjien tasoja. 
+Esimerkiksi: Käyttäjän nostaminen "Luotetuksi käyttäjäksi".
+
+Reseptin lisäys tekstitiedostosta:
+käyttäjä voi lukea tekstiedoston tiedot, ja lisätä ne järjestelmään.
+
+muita käyttötapauksia: reseptin haku, käyttäjätietojen muutos, uloskirjautuminen
