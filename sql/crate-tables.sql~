@@ -1,23 +1,38 @@
 CREATE TABLE drinkki
 (
-drinkkiID int not null,
+drinkkiID int not null ON DELETE CASCADE,
 nimi varchar(50) not null,
 lempinimet varchar(300),
-valmistusohje varchar(1000)
+valmistusohje varchar(1000),
+muokattu TIMESTAMP,
+kayttajanimi varchar(30) not null,
+PRIMARY KEY (drinkkiID),
+FOREIGN KEY (kayttajanimi) REFERENCES kayttaja
 );
 
 CREATE TABLE ainesosa
 (
-ainesosaID int not null,
+ainesosaID int not null ON DELETE CASCADE,
 nimi varchar(50) not null,
-kuvaus varchar(1000)
+kuvaus varchar(1000),
+PRIMARY KEY (ainesosaID),
 );
 
-CREATE TABLE käyttäjä
+CREATE TABLE drinkki_ainesosa
 (
-userID int not null,
+drinkkiID int not null,
+ainesosaID int not null,
+FOREIGN KEY(drinkkiID) REFERENCES drinkki
+FOREIGN KEY(ainesosaID) REFERENCES ainesosa
+)
+
+CREATE TABLE kayttaja
+(
 sahkoposti varchar(50) not null,
+kayttajanimi varchar(30) not null,
 salasana varchar(30) not null,
 kayttajataso int not null,
+luotu TIMESTAMP not null,
 check(kayttajataso >= 1 and kayttajataso <= 3)
+PRIMARY KEY(sahkoposti )
 );
