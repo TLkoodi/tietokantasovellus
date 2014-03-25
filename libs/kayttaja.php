@@ -1,6 +1,6 @@
 <?php
 
-require 'kirjastot/tietokantayhteys.php';
+require 'tietokantayhteys.php';
 
 
 class Kayttaja {
@@ -27,18 +27,18 @@ class Kayttaja {
     }
 
     public static function etsiKaikkiKayttajat() {
-        $sql = "SELECT kayttajanimi, sahkoposti, salasana, kayttajataso, luotu FROM users";
+        $sql = "SELECT kayttajanimi, sahkoposti, salasana, kayttajataso, luotu FROM Kayttaja";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute();
 
         $tulokset = array();
         foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
             $kayttaja = new Kayttaja();
-            $kayttaja->setKayttajanimi($tulos->kayttajanimi);
+           $kayttaja->setKayttajanimi($tulos->kayttajanimi);
             $kayttaja->setSahkoposti($tulos->sahkoposti);
-            $kayttaja->setSalanana($tulos->salasana);
-            $kayttaja->setKayttajataso($tulos->kayttajataso);
-            $kayttaja->setLuotu($tulos->luotu);
+//            $kayttaja->setSalanana($tulos->salasana);
+//            $kayttaja->setKayttajataso($tulos->kayttajataso);
+//            $kayttaja->setLuotu($tulos->luotu);
 
             //$array[] = $muuttuja; lisää muuttujan arrayn perään. 
             //Se vastaa melko suoraan ArrayList:in add-metodia.
@@ -52,4 +52,24 @@ class Kayttaja {
         return $tulokset;
     }
 
-}}
+}
+
+public function setKayttajanimi($kayttajanimi){
+    $this->kayttajanimi = $kayttajanimi;
+}
+
+public function setSahkoposti($sahkoposti){
+    $this->sahkoposti = $sahkoposti;
+}
+
+public function getNimi(){
+    return $this->kayttajanimi;
+}
+
+public function getSahkoposti(){
+    return $this->sahkoposti;
+}
+    
+
+        }
+?>

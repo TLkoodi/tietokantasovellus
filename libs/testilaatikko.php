@@ -8,6 +8,11 @@
     <?php
     require_once "kirjastot/tietokantayhteys.php";
     require_once "kirjastot/kayttaja.php";
+
+    var_dump("ddd");
+    
+    $listaus->etsiKaikkiKayttajat();
+
     foreach ($lista as $asia):
         ?>
     <li><?php echo $asia; ?></li>

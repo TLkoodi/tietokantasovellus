@@ -10,12 +10,12 @@
 <body>
     <div class="container">
     <h1>Kirjaudu</h1>
-    <form action="./drinkit.html">
+    <form action="kirjaudu.php" method="POST">
     <form class="form-horizontal" role="form" action="lomake.html" method="POST">
       <div class="form-group">
-        <label for="inputEmail1" class="col-md-2 control-label">Sähköposti</label>
+        <label for="inputName" class="col-md-2 control-label">Nimi</label>
         <div class="col-md-10">
-          <input type="email" class="form-control" id="inputEmail1" name="email" placeholder="Email">
+          <input type="text" class="form-control" id="username" name="username" placeholder="Text" value="<?php echo $data->kayttaja; ?>">
         </div>
       </div>
       <div class="form-group">
