@@ -9,10 +9,4 @@ function getTietokantayhteys() {
     $yhteys->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
   }
   
-  $sql = "select 1+1 as two";
-    $kysely = $yhteys->prepare($sql);
-
-    $kakkonen = $kysely->fetchColumn();
-    
-  return $kakkonen;
 }
