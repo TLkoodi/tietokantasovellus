@@ -33,7 +33,7 @@
   </div>
     
     <div align="left">
-        <a href="./rekisteroidy.html">Rekiströidy</a>
+        <a href="./rekisteroidy.html">Rekisteröidy</a>
     </div>
 <!--    
 <div class="alert alert-danger"><?php echo $data->virhe; ?></div>-->
