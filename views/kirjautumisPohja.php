@@ -6,7 +6,6 @@
      * joka haetaan sopivasta näkymätiedostosta.
      * Oikean näkymän tiedostonimi on tallennettu muuttujaan $sivu.
      */
-    require 'views/navigointipalkki.php';
     require 'views/' . $sivu;
     ?>
 

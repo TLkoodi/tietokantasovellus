@@ -35,8 +35,8 @@
     <div align="left">
         <a href="./rekisteroidy.html">Rekiströidy</a>
     </div>
-    
-    <div class="alert alert-danger"><?php echo $data->virhe; ?></div>
+<!--    
+<div class="alert alert-danger"><?php echo $data->virhe; ?></div>-->
 
     
 </body>

@@ -1,5 +1,4 @@
 <?php
-
 require 'tietokantayhteys.php';
 
 
@@ -25,6 +24,23 @@ class Kayttaja {
     function hae() {
         $yhteys = getTietokantayhteys();
     }
+    
+    public static function etsiKayttajaTunnuksilla($haettuKayttaja, $haettuSalasana) {
+    $sql = "SELECT kayttajanimi, salasana FROM Kayttaja where kayttajanimi = ? AND salasana = ? LIMIT 1";
+    $kysely = getTietokantayhteys()->prepare($sql);
+    $kysely->execute(array($haettuKayttaja, $haettuSalasana));
+    
+    $tulos = $kysely->fetchObject();
+    if ($tulos == null) {
+      return null;
+    } else {
+      $kayttaja = new Kayttaja();
+      $kayttaja->setKayttajanimi($tulos->kayttajanimi);
+      $kayttaja->setSalasana($tulos->salasana);
+
+      return $kayttaja;
+    }
+  }
 
     public static function etsiKaikkiKayttajat() {
         $sql = "SELECT kayttajanimi, sahkoposti, salasana, kayttajataso, luotu FROM Kayttaja";
@@ -62,12 +78,20 @@ public function setSahkoposti($sahkoposti){
     $this->sahkoposti = $sahkoposti;
 }
 
+public function setSalasana($salasana){
+    $this->salasana = $salasana;
+}
+
 public function getNimi(){
     return $this->kayttajanimi;
 }
 
 public function getSahkoposti(){
     return $this->sahkoposti;
+}
+
+public function getSalasana(){
+    return $this->salasana;
 }
     
 

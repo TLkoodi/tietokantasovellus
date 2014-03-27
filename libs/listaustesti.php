@@ -2,7 +2,7 @@
 
 //
 //require_once "tietokantayhteys.php";
-require_once "kayttaja.php";
+require_once "models/kayttaja.php";
 ?>
 <?php
 
