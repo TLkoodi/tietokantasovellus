@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
     <?php
     session_start();
-    unset($_SESSION['kirjautunut']);
+  //  unset($_SESSION['kirjautunut']);
 
     require_once 'libs/kirjautumisCommon.php';
     require 'libs/models/kayttaja.php';
@@ -22,7 +16,6 @@
 
     $kayttaja = $_POST["username"];
     $salasana = $_POST["password"];
-
 
     $haettuKayttaja = Kayttaja::etsiKayttajaTunnuksilla($kayttaja, $salasana);
 
@@ -44,7 +37,7 @@
         $_SESSION['kirjautunut'] = $haettuKayttajakayttaja;
         //   if ("1" == $kayttaja1 && "1" == $salasana1) {
         /* Jos tunnus on oikea, ohjataan käyttäjä sopivalla HTTP-otsakkeella kissalistaan. */
-        header('Location: drinkkilista.php');
+        header('Location: ainesosalistaus.php');
     } else {
         /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen. */
         naytaNakyma("login.php", array(
@@ -53,5 +46,3 @@
         ));
     }
     ?>
-</body>
-</html>
