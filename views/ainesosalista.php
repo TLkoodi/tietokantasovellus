@@ -26,6 +26,17 @@
         </table>
     </div>
 
+    <?php if (!empty($_SESSION['ilmoitus'])): ?>
+        <div class="alert alert-danger">
+            <?php echo $_SESSION['ilmoitus']; ?>
+        </div>
+        <?php
+        // Samalla kun viesti näytetään, se poistetaan istunnosta,
+        // ettei se näkyisi myöhemmin jollain toisella sivulla uudestaan.
+        unset($_SESSION['ilmoitus']);
+    endif;
+    ?>
+
     <?php if ($data->sivu > 1):
         ?>
         <a href="aineosalistaus.php?sivu=<?php echo $data->sivu - 1; ?>">Edellinen sivu</a>
@@ -36,8 +47,8 @@
 
     <a href="lisaaainesosa.php">Lisää uusi ainesosa</a>
     <p>
-    Yhteensä <?php echo $data->AinesosaLkm; ?> ainesosaa. 
-    Olet sivulla <?php echo $data->sivu; ?>/<?php echo $data->sivuja; ?>.
+        Yhteensä <?php echo $data->AinesosaLkm; ?> ainesosaa. 
+        Olet sivulla <?php echo $data->sivu; ?>/<?php echo $data->sivuja; ?>.
 </body>
 </html>
 

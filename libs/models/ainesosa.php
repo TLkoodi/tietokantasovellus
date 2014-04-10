@@ -9,8 +9,7 @@ class Ainesosa {
     private $kuvaus;
     private $virheet;
 
-    public function __construct($ainesosaid, $nimi, $kuvaus) {
-        $this->ainesosaid = $ainesosaid;
+    public function __construct($nimi, $kuvaus) {
         $this->nimi = $nimi;
         $this->kuvaus = $kuvaus;
     }
@@ -41,30 +40,42 @@ class Ainesosa {
     public static function etsiAinesosa($haettuAinesosa) {
         $sql = "SELECT nimi FROM Ainesosa where nimi = ? LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
-        $kysely->execute(array($haettuNimi));
+        $kysely->execute(array($haettuAinesosa));
 
         $tulos = $kysely->fetchObject();
         if ($tulos == null) {
             return null;
         } else {
-            $ainesosa = new Ainesosa();
-            $ainesosa->setID($tulos->ainesosaid);
-
-            return $ainesosa;
+            return $tulos;
         }
     }
 
     public function lisaaKantaan() {
-        $sql = "INSERT INTO Aineosa(ainesosaID, nimi, kuvaus) VALUES(?,?,?) RETURNING id";
+        $sql = "INSERT INTO Ainesosa(ainesosaID, nimi, kuvaus) VALUES(?,?,?)";
         $kysely = getTietokantayhteys()->prepare($sql);
 
 
 
-        $ok = $kysely->execute(array(isoinSerial(), $this->getNimi(), $this->getKuvaus()));
+        $ok = $kysely->execute(array(Ainesosa::isoinSerial(), $this->getNimi(), $this->getKuvaus()));
         if ($ok) {
             //Haetaan RETURNING-määreen palauttama id.
             //HUOM! Tämä toimii ainoastaan PostgreSQL-kannalla!
-            $this->id = $kysely->fetchColumn();
+            $id = $kysely->fetchColumn();
+        }
+        return $ok;
+    }
+    
+    public function muokkaaAinesosaa() {
+        $sql = "UPDATE Ainesosa SET nimi = ?, kuvaus = ? WHERE ainesosaID = ?";
+        $kysely = getTietokantayhteys()->prepare($sql);
+
+
+
+        $ok = $kysely->execute(array(Ainesosa::isoinSerial(), $this->getNimi(), $this->getKuvaus()));
+        if ($ok) {
+            //Haetaan RETURNING-määreen palauttama id.
+            //HUOM! Tämä toimii ainoastaan PostgreSQL-kannalla!
+            $id = $kysely->fetchColumn();
         }
         return $ok;
     }
@@ -109,8 +120,9 @@ class Ainesosa {
         return $numero;
     }
 
-    public static function onkoKelvollinen() {
-        if (!etsiAinesosa($this->nimi) == null) {
+    public function onkoKelvollinen() {
+        $loytyiko = Ainesosa::etsiAinesosa($this->nimi);
+        if ($loytyiko != null) {
             $this->virheet['nimi'] = "Samanniminen ainesosa on jo listassa.";
         } else {
             unset($this->virheet['nimi']);
@@ -130,7 +142,7 @@ class Ainesosa {
         return empty($this->virheet);
     }
     
-    public static function getVirheet(){
+    public function getVirheet(){
         return $this->virheet;
     }
     

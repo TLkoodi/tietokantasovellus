@@ -6,7 +6,7 @@
     <body>
         <div class="container">
 
-            <form action="lisaaainesosa.php" method="POST">
+            <form action="muokkaaAinesosaa.php" method="POST">
                     <div class="form-group">
                         <label for="inputText" class="col-md-2 control-label">Ainesosan nimi</label>
                         <div class="col-md-10">
@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <div class="col-md-offset-2 col-md-10">
-                            <button type="submit" class="btn btn-default">Lisää ainesosa</button>
+                            <button type="submit" class="btn btn-default">Muokkaa ainesosaa</button>
                         </div>
                     </div>
                 </form>
