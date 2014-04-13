@@ -10,13 +10,13 @@
                     <div class="form-group">
                         <label for="inputText" class="col-md-2 control-label">Ainesosan nimi</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="username" name="nimi" placeholder="Text" value="<?php echo $data->ainesosa; ?>">
+                            <input type="text" class="form-control" id="username" name="nimi" placeholder="Text" value="<?php echo htmlspecialchars($data->ainesosa); ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="inputText" class="col-md-2 control-label">Kuvaus</label>
                         <div class="col-md-10">
-                            <input type="text" class="form-control" id="inputPassword1" name="kuvaus" placeholder="Kuvaus"value="<?php echo $data->kuvaus; ?>">
+                            <input type="text" class="form-control" id="inputPassword1" name="kuvaus" placeholder="Kuvaus"value="<?php echo htmlspecialchars($data->kuvaus); ?>">
                         </div>
                     </div>
                     <div class="form-group">

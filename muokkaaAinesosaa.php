@@ -11,7 +11,8 @@ $uusiainesosa = Ainesosa::etsiAinesosa($id);
 if (empty($_POST["muokattavaNimi"]) || empty($_POST["muokattavaKuvaus"])) {
     /* Käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
     naytaNakyma("ainesosanMuokkaus.php", array(
-        'ainesosa' => $uusiainesosa
+    'ainesosa' => $uusiainesosa,
+    'virhe' => "Anna nimi ja kuvaus",
     ));
     exit();
 }

@@ -18,10 +18,33 @@
                 <?php foreach ($data->ainesosat as $ainesosa): ?>
                     <tr>
                         <td>
-                            <a href="ainesosaTieto.php?id=<?php echo $ainesosa->getNimi() ?>"><?php echo $ainesosa->getNimi() ?></a>
+                            <a href="ainesosaTieto.php?id=<?php echo  htmlspecialchars($ainesosa->getNimi()) ?>"><?php echo htmlspecialchars($ainesosa->getNimi()) ?></a>
+                        </td>
+                        <td>                 
+                            <form action="./muokkaaAinesosaa.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>" method="POST">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-default">Muokkaa ainesosaa</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <form action="./poistaAinesosa.php?id=<?php echo htmlspecialchars($ainesosa->getID()) ?>" method="POST">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-default">Poista ainesosa</button>
+                                </div>
+
+                            </form>
                         </td>
                     </tr>
                 <?php endforeach; ?>
+                
+                    <td>
+                        <form action="lisaaainesosa.php" method="POST">
+                            <div class="col-md-10">
+                                <button type="submit" class="btn btn-default">Lisää ainesosa</button>
+                            </div>
+
+                        </form></td><td><td></td></td></tr>
             </tbody>
         </table>
     </div>
@@ -39,13 +62,12 @@
 
     <?php if ($data->sivu > 1):
         ?>
-        <a href="aineosalistaus.php?sivu=<?php echo $data->sivu - 1; ?>">Edellinen sivu</a>
+        <a href="ainesosalistaus.php?sivu=<?php echo $data->sivu - 1; ?>">Edellinen sivu</a>
     <?php endif; ?>
     <?php if ($data->sivu < $data->sivuja): ?>
-        <a href="aineosalistaus.php.php?sivu=<?php echo $data->sivu + 1; ?>">Seuraava sivu</a>
+        <a href="ainesosalistaus.php?sivu=<?php echo $data->sivu + 1; ?>">Seuraava sivu</a>
     <?php endif; ?>
 
-    <a href="lisaaainesosa.php">Lisää uusi ainesosa</a>
     <p>
         Yhteensä <?php echo $data->AinesosaLkm; ?> ainesosaa. 
         Olet sivulla <?php echo $data->sivu; ?>/<?php echo $data->sivuja; ?>.

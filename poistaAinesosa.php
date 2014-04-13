@@ -7,7 +7,7 @@ $id = $_GET['id'];
 
 Ainesosa::poistaAinesosa($id);
 
-$_SESSION['ilmoitus'] = "Ainesosaa poistettu.";
+$_SESSION['ilmoitus'] = "Ainesosa poistettu.";
     //Ainesosa poistettiin onnistuneesti, lähetetään käyttäjä eteenpäin
     
     header('Location: ainesosalistaus.php');
