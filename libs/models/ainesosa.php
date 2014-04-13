@@ -155,12 +155,12 @@ class Ainesosa {
             unset($this->virheet['nimi']);
         }
 
-        if (strlen($this->nimi) > 30) {
+        if (strlen($this->nimi) > 50) {
             $this->virheet['nimipituus'] = "Nimi on liian pitkä";
         } else {
             unset($this->virheet['nimipituus']);
         }
-        if (strlen($this->kuvaus) > 100) {
+        if (strlen($this->kuvaus) > 1000) {
             $this->virheet['kuvauspituus'] = "Kuvaus on liian pitkä";
         } else {
             unset($this->virheet['kuvaus']);
@@ -170,12 +170,12 @@ class Ainesosa {
     }
     
     public function onkoKelvollinenMuokattavaksi() {
-        if (strlen($this->nimi) > 30) {
+        if (strlen($this->nimi) > 50) {
             $this->virheet['nimipituus'] = "Nimi on liian pitkä";
         } else {
             unset($this->virheet['nimipituus']);
         }
-        if (strlen($this->kuvaus) > 100) {
+        if (strlen($this->kuvaus) > 1000) {
             $this->virheet['kuvauspituus'] = "Kuvaus on liian pitkä";
         } else {
             unset($this->virheet['kuvaus']);

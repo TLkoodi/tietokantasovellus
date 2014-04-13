@@ -37,7 +37,7 @@
         $_SESSION['kirjautunut'] = $haettuKayttajakayttaja;
         //   if ("1" == $kayttaja1 && "1" == $salasana1) {
         /* Jos tunnus on oikea, ohjataan käyttäjä sopivalla HTTP-otsakkeella kissalistaan. */
-        header('Location: ainesosalistaus.php');
+        header('Location: drinkkilistaus.php');
     } else {
         /* Väärän tunnuksen syöttänyt saa eteensä kirjautumislomakkeen. */
         naytaNakyma("login.php", array(
