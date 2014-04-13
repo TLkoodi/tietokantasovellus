@@ -4,7 +4,7 @@ require 'tietokantayhteys.php';
 
 class Ainesosa {
 
-    private $ainesosaid;
+    private $ainesosaID;
     private $nimi;
     private $kuvaus;
     private $virheet;
@@ -22,10 +22,8 @@ class Ainesosa {
 
         $tulokset = array();
         foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
-            $ainesosa = new Ainesosa();
-            $ainesosa->setID($tulos->ainesosaid);
-            $ainesosa->setNimi($tulos->nimi);
-            $ainesosa->setKuvaus($tulos->kuvaus);
+            $ainesosa = new Ainesosa($tulos->nimi, $tulos->kuvaus);
+            $ainesosa->setID($tulos->ainesosaID);
 
             $tulokset[] = $ainesosa;
         }
@@ -38,7 +36,7 @@ class Ainesosa {
     }
 
     public static function etsiAinesosa($haettuAinesosa) {
-        $sql = "SELECT nimi FROM Ainesosa where nimi = ? LIMIT 1";
+        $sql = "SELECT ainesosaID, nimi, kuvaus FROM Ainesosa where nimi = ? LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($haettuAinesosa));
 
@@ -46,7 +44,25 @@ class Ainesosa {
         if ($tulos == null) {
             return null;
         } else {
-            return $tulos;
+            $ainesosa = new Ainesosa($tulos->nimi, $tulos->kuvaus);
+ //           $ainesosa->setID($tulos->ainesosaID);
+            return $ainesosa;
+        }
+    }
+    
+    public static function etsiAinesosaID($haettuID) {
+        $sql = "SELECT ainesosaID, nimi, kuvaus FROM Ainesosa where ainesosaID = ? LIMIT 1";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($haettuID));
+
+        $tulos = $kysely->fetchObject();
+        if ($tulos == null) {
+            return null;
+        } else {
+            $ainesosa = new Ainesosa($tulos->nimi, $tulos->kuvaus);
+            $ainesosa->setID($tulos->ainesosaID);
+            
+            return $ainesosa;
         }
     }
 
@@ -71,7 +87,7 @@ class Ainesosa {
 
 
 
-        $ok = $kysely->execute(array(Ainesosa::isoinSerial(), $this->getNimi(), $this->getKuvaus()));
+        $ok = $kysely->execute(array($this->getNimi(), $this->getKuvaus(), $this->getID()));
         if ($ok) {
             //Haetaan RETURNING-määreen palauttama id.
             //HUOM! Tämä toimii ainoastaan PostgreSQL-kannalla!
@@ -79,9 +95,15 @@ class Ainesosa {
         }
         return $ok;
     }
+    
+    public static function poistaAinesosa($poistettavaID){
+        $sql = "DELETE FROM Ainesosa WHERE ainesosaID = ?";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($poistettavaID));
+    }
 
     public function setID($aineosaid) {
-        $this->ainesosaid = $ainesosaid;
+  //      $this->ainesosaID = $ainesosaid;
     }
 
     public function setNimi($nimi) {
@@ -93,7 +115,12 @@ class Ainesosa {
     }
 
     public function getID() {
-        return $this->ainesosaid;
+        $sql = "SELECT ainesosaID FROM Ainesosa WHERE nimi = ? LIMIT 1";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($this->nimi));
+        $numero = $kysely->fetchColumn();
+        $this->ainesosaID = $numero;
+        return $numero;
     }
 
     public function getNimi() {
@@ -128,6 +155,21 @@ class Ainesosa {
             unset($this->virheet['nimi']);
         }
 
+        if (strlen($this->nimi) > 30) {
+            $this->virheet['nimipituus'] = "Nimi on liian pitkä";
+        } else {
+            unset($this->virheet['nimipituus']);
+        }
+        if (strlen($this->kuvaus) > 100) {
+            $this->virheet['kuvauspituus'] = "Kuvaus on liian pitkä";
+        } else {
+            unset($this->virheet['kuvaus']);
+        }
+        
+        return empty($this->virheet);
+    }
+    
+    public function onkoKelvollinenMuokattavaksi() {
         if (strlen($this->nimi) > 30) {
             $this->virheet['nimipituus'] = "Nimi on liian pitkä";
         } else {

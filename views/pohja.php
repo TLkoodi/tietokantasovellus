@@ -25,6 +25,10 @@
     ?>
 
     <?php if (!empty($data->virhe)): ?>
-        <div class="alert alert-danger"><?php echo $data->virhe; ?></div>
-    <?php endif; ?>
+    <?php foreach ($data->virhe as $virhe):
+    ?>
+        <div class="alert alert-danger"><?php echo $virhe; ?></div>
+    <?php 
+    endforeach;
+    endif; ?>
 </html>

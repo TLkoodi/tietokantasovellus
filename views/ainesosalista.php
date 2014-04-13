@@ -18,7 +18,7 @@
                 <?php foreach ($data->ainesosat as $ainesosa): ?>
                     <tr>
                         <td>
-                            <?php echo $ainesosa->getNimi(); ?>
+                            <a href="ainesosaTieto.php?id=<?php echo $ainesosa->getNimi() ?>"><?php echo $ainesosa->getNimi() ?></a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

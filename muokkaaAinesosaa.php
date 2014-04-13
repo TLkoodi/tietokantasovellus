@@ -1,37 +1,43 @@
 <?php
+
 session_start();
 require 'libs/common.php';
 require 'libs/models/ainesosa.php';
 
-if (empty($_POST["nimi"]) || empty($_POST["kuvaus"])) {
-        /* Käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
-        naytaNakyma("ainesosalomake.php", array(
-            'virhe' => "Anna nimi ja kuvaus",
-        ));
-        exit();
-    }
+$id = $_GET['id'];
 
-$nimi = $_POST["nimi"];
-$kuvaus = $_POST["kuvaus"];
+$uusiainesosa = Ainesosa::etsiAinesosa($id);
 
-$uusiainesosa = new Ainesosa($nimi, $kuvaus);
+if (empty($_POST["muokattavaNimi"]) || empty($_POST["muokattavaKuvaus"])) {
+    /* Käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
+    naytaNakyma("ainesosanMuokkaus.php", array(
+        'ainesosa' => $uusiainesosa
+    ));
+    exit();
+}
 
-if ($uusiainesosa->onkoKelvollinen($nimi)) {
-  $uusiainesosa->lisaaKantaan();
-  
- $_SESSION['ilmoitus'] = "Ainesosa lisätty onnistuneesti.";
-  //Kissa lisättiin kantaan onnistuneesti, lähetetään käyttäjä eteenpäin
-  header('Location: ainesosalistaus.php');
-  //Asetetaan istuntoon ilmoitus siitä, että kissa on lisätty.
-  //Tästä tekniikasta kerrotaan lisää kohta
+$muokattavanimi = $_POST["muokattavaNimi"];
+$muokattavakuvaus = $_POST["muokattavaKuvaus"];
+$muokattavaid = $_POST["id"];
 
+$uusiainesosa->setNimi($muokattavanimi);
+$uusiainesosa->setKuvaus($muokattavakuvaus);
+$uusiainesosa->setID($muokattavaid);
+
+if ($uusiainesosa->onkoKelvollinenMuokattavaksi()) {
+    $uusiainesosa->muokkaaAinesosaa();
+
+    $_SESSION['ilmoitus'] = "Ainesosaa muokattu onnistuneesti.";
+    //Ainesosa lisättiin kantaan onnistuneesti, lähetetään käyttäjä eteenpäin
+
+    header('Location: ainesosalistaus.php');
+    //Asetetaan istuntoon ilmoitus siitä, että ainesosa on lisätty.
 } else {
-  $virheet = $uusiainesosa->getVirheet();
+    $virheet = $uusiainesosa->getVirheet();
 
-  //Virheet voidaan nyt välittää näkymälle syötettyjen tietojen kera
-  naytaNakyma("ainesosalomake.php", array(
-    'ainesosa' => $nimi,
-      'kuvaus' => $kuvaus,
-    'virhe' => $uusiainesosa->getVirheet()
-  ));
+    //Virheet voidaan nyt välittää näkymälle syötettyjen tietojen kera
+    naytaNakyma("ainesosanMuokkaus.php", array(
+        'ainesosa' => $uusiainesosa,
+        'virhe' => $uusiainesosa->getVirheet()
+    ));
 }
