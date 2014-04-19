@@ -1,8 +1,14 @@
 <!DOCTYPE HTML>
 <html>
-    <link rel="stylesheet" href="./css/bootstrap.css" type="text/css"/>
-    <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
-    
+    <head>
+        <link href="./css/bootstrap.css" rel="stylesheet">
+        <link href="./css/bootstrap-theme.css" rel="stylesheet">
+        <link href="./css/main.css" rel="stylesheet">
+        <title>Kirjaudu drinkkitietokantaan</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">  
+    </head>
+
     <?php
     /* HTML-rungon keskellä on sivun sisältö, 
      * joka haetaan sopivasta näkymätiedostosta.

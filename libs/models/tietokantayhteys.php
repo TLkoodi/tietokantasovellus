@@ -1,6 +1,8 @@
 <?php
+
 function getTietokantayhteys() {
-  static $yhteys = null; //Muuttuja, jonka sisältö säilyy getTietokantayhteys-kutsujen välillä.
+    static $yhteys = null;
+   //Muuttuja, jonka sisältö säilyy getTietokantayhteys-kutsujen välillä.
 
   if ($yhteys === null) { 
     //Tämä koodi suoritetaan vain kerran, sillä seuraavilla 

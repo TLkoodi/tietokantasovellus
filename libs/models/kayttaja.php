@@ -9,6 +9,7 @@ class Kayttaja {
     private $salasana;
     private $kayttajataso;
     private $luotu;
+    private $virheet;
 
     public function __construct($kayttajanimi, $sahkoposti, $salasana, $kayttajataso, $luotu) {
         $this->kayttajanimi = $kayttajanimi;
@@ -40,6 +41,19 @@ class Kayttaja {
             return $kayttaja;
         }
     }
+    
+    public static function etsiKayttajanimi($haettuKayttaja) {
+        $sql = "SELECT kayttajanimi FROM Kayttaja where kayttajanimi = ? LIMIT 1";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($haettuKayttaja));
+
+        $tulos = $kysely->fetchObject();
+        if ($tulos == null) {
+            return null;
+        } else {
+          return $tulos;
+        }
+    }
 
     public static function etsiKaikkiKayttajat() {
         $sql = "SELECT kayttajanimi, sahkoposti, salasana, kayttajataso, luotu FROM Kayttaja";
@@ -66,6 +80,34 @@ class Kayttaja {
             return $tulokset;
         }
     }
+    
+    public function lisaaKantaan() {
+        $sql = "INSERT INTO Kayttaja(kayttajanimi, sahkoposti, salasana, kayttajataso, luotu) VALUES(?,?,?,'1','1999-01-08')";
+        $kysely = getTietokantayhteys()->prepare($sql);
+         $ok = $kysely->execute(array($this->kayttajanimi, $this->sahkoposti, $this->salasana        
+         ));
+        if ($ok) {
+            //Haetaan RETURNING-määreen palauttama id.
+            //HUOM! Tämä toimii ainoastaan PostgreSQL-kannalla!
+            $id = $kysely->fetchColumn();
+        }
+        return $ok;
+    }
+    
+    public function onkoKelvollinen() {
+        if (strlen($this->kayttajanimi) > 30) {
+            $this->virheet['nimipituus'] = "Nimi on liian pitkä";
+        } else {
+            unset($this->virheet['nimipituus']);
+        }
+        if (strlen($this->salasana) > 30) {
+            $this->virheet['salasana'] = "salasana on liian pitkä";
+        } else {
+            unset($this->virheet['salasana']);
+        }
+        
+        return empty($this->virheet);
+    }
 
     public function setKayttajanimi($kayttajanimi) {
         $this->kayttajanimi = $kayttajanimi;
@@ -89,6 +131,10 @@ class Kayttaja {
 
     public function getSalasana() {
         return $this->salasana;
+    }
+    
+    public function getVirheet(){
+        return $this->virheet;
     }
 
 }

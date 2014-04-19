@@ -1,6 +1,8 @@
 <?php
 
-require 'tietokantayhteys.php';
+if (!function_exists('getTietokantayhteys')) {
+    require 'tietokantayhteys.php';
+}
 
 class Ainesosa {
 

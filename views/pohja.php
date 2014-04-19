@@ -4,6 +4,12 @@
     <link rel="stylesheet" href="./css/bootstrap.css" type="text/css"/>
     <link rel="stylesheet" href="./css/bootstrap.min.css" type="text/css">
 
+    <head>
+        <title>DRINKKITIETOKANTA</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+    </head>
+
     <?php
     /* HTML-rungon keskellä on sivun sisältö, 
      * joka haetaan sopivasta näkymätiedostosta.
@@ -25,10 +31,12 @@
     ?>
 
     <?php if (!empty($data->virhe)): ?>
-    <?php foreach ($data->virhe as $virhe):
+        <?php foreach ($data->virhe as $virhe):
+            ?>
+            <div class="alert alert-danger"><?php echo $virhe; ?></div>
+            <?php
+        endforeach;
+        unset($data->virhe);
+    endif;
     ?>
-        <div class="alert alert-danger"><?php echo $virhe; ?></div>
-    <?php 
-    endforeach;
-    endif; ?>
 </html>

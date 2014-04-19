@@ -1,12 +1,4 @@
 <!DOCTYPE html>
-<head>
-    <link href="../css/bootstrap.css" rel="stylesheet">
-    <link href="../css/bootstrap-theme.css" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet">
-    <title>TODO supply a title</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
 <body>
     <h1><?php echo htmlspecialchars($data->nimi) ?></h1>
     <div>
@@ -20,15 +12,24 @@
             <tr>
                 <th>Drinkin nimi</th>
                 <th>Viimeksi muokattu</th>
-                <th>Lisännyt</th>
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td><a href="./karhuviinabattery.html">Karhuviinabattery</a></td>
-                <td>23.11.2013 18:01</td>
-                <td>admin</td>
-            </tr>
+            <?php foreach ($data->drinkit as $drinkki): ?>
+                    <tr>
+                        <td>
+                            <a href="drinkkiTieto.php?id=<?php echo  htmlspecialchars($drinkki->getNimi()) ?>"><?php echo htmlspecialchars($drinkki->getNimi()) ?></a>
+                        </td>
+                        <td>                 
+                            <form action="./muokkaaDrinkkia.php?id=<?php echo htmlspecialchars($drinkki->getNimi()) ?>" method="POST">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <button type="submit" class="btn btn-default">Muokkaa drinkkiä</button>
+                                </div>
+                            </form>
+                        </td>
+                        
+                    </tr>
+                <?php endforeach; ?>
         </tbody>
     </table>
 </div>

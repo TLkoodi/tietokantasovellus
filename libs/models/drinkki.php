@@ -1,6 +1,8 @@
 <?php
+if (!function_exists('getTietokantayhteys')) {
+    require 'tietokantayhteys.php';
+}
 
-require 'tietokantayhteys.php';
 
 class Drinkki {
 
@@ -60,7 +62,7 @@ class Drinkki {
     }
     
     public static function etsiDrinkkiID($haettuID) {
-        $sql = "SELECT SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where drinkkiID = ? LIMIT 1";
+        $sql = "SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where drinkkiID = ? LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($haettuID));
 
@@ -113,7 +115,7 @@ class Drinkki {
     }
 
     public function setID($drinkkiID) {
-  //      $this->drinkkiID = $drinkkiID;
+        $this->drinkkiID = $drinkkiID;
     }
 
     public function setNimi($nimi) {

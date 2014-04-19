@@ -23,10 +23,18 @@
                 </div>
                 <div class="form-group">
                     <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">Muokkaa drinkkiä</button>
+                        <button type="submit" class="btn btn-default">Päivitä drinkkin tiedot</button>
                     </div>
                 </div>
             </form>
+            
+            <form action="./drinkki_ainesosalisays.php?id=<?php echo  htmlspecialchars($data->drinkki->getID()) ?>" method="POST">
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button type="submit" class="btn btn-default">Lisää drinkkiin ainesosia!</button>
+                </div>
+            </div>
+    </form>
         </div>
     </body>
 </html>

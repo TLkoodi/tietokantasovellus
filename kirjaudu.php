@@ -7,9 +7,7 @@
 //    require 'uloskirjautuminen.php';
 
     if (empty($_POST["username"]) || empty($_POST["password"])) {
-        /* Käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
         naytaNakyma("login.php", array(
-            'virhe' => "Kirjautuminen epäonnistui! Et antanut käyttäjätunnusta tai salasanaa.",
         ));
         exit();
     }
@@ -18,6 +16,8 @@
     $salasana = $_POST["password"];
 
     $haettuKayttaja = Kayttaja::etsiKayttajaTunnuksilla($kayttaja, $salasana);
+    
+    
 
 //    var_dump($haettuKayttaja);
 //    if ($haettuKayttaja != null) {
