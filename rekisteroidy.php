@@ -1,8 +1,7 @@
 <?php
-
 session_start();
-require 'libs/common.php';
-require 'libs/models/kayttaja.php';
+require_once 'libs/common.php';
+require_once 'libs/models/kayttaja.php';
 
 if (empty($_POST["username"]) || empty($_POST["password"])) {
     naytaNakyma("rekisteroitymisSivu.php", array(
@@ -23,7 +22,7 @@ if (!empty($onkoOlemassa)) {
     ));
 }
 
-$uusikayttaja = new Kayttaja($kayttaja, $sahkoposti, $salasana, 1, 1);
+$uusikayttaja = new Kayttaja($kayttaja, $sahkoposti, $salasana, 2, 1);
 
 if ($uusikayttaja->onkoKelvollinen()) {
     $uusikayttaja->lisaaKantaan();

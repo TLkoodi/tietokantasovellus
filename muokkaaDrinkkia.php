@@ -4,9 +4,9 @@ session_start();
 require 'libs/common.php';
 require 'libs/models/drinkki.php';
 
-$id = $_GET['id'];
+$nimi = $_GET['id'];
 
-$uusidrinkki = Drinkki::etsiDrinkki($id);
+$uusidrinkki = Drinkki::etsiDrinkki($nimi);
 
 if (empty($_POST["muokattavaNimi"]) || empty($_POST["muokattavaValmistusohje"])) {
     /* Käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */

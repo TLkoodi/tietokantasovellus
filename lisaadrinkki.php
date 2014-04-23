@@ -20,9 +20,15 @@ $uusidrinkki->setKayttajanimi("1");
 if ($uusidrinkki->onkoKelvollinen()) {
   $uusidrinkki->lisaaKantaan();
   
- $_SESSION['ilmoitus'] = "drinkki lisätty onnistuneesti.";
+ $_SESSION['ilmoitus'] = "Drinkki lisätty onnistuneesti. Lisää drinkkiin vielä ainesosat.";
+ 
+ $lahtettavadrinkki = Drinkki::etsiDrinkki($nimi);
+ $muokattavaid = $lahtettavadrinkki->getID();
   //lisättiin kantaan onnistuneesti, lähetetään käyttäjä eteenpäin
-  header('Location: drinkkilistaus.php');
+  naytaNakyma("ainesosanLisaysDrinkkiin.php", array(
+        'nimi' => $nimi,
+        'id' => $muokattavaid,
+    ));
 
 } else {
   $virheet = $uusidrinkki->getVirheet();

@@ -1,6 +1,7 @@
 <?php
-
-require 'tietokantayhteys.php';
+if (!function_exists('getTietokantayhteys')) {
+    require 'tietokantayhteys.php';
+}
 
 class Kayttaja {
 
@@ -41,7 +42,7 @@ class Kayttaja {
             return $kayttaja;
         }
     }
-    
+
     public static function etsiKayttajanimi($haettuKayttaja) {
         $sql = "SELECT kayttajanimi FROM Kayttaja where kayttajanimi = ? LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
@@ -51,7 +52,7 @@ class Kayttaja {
         if ($tulos == null) {
             return null;
         } else {
-          return $tulos;
+            return $tulos;
         }
     }
 
@@ -80,12 +81,12 @@ class Kayttaja {
             return $tulokset;
         }
     }
-    
+
     public function lisaaKantaan() {
-        $sql = "INSERT INTO Kayttaja(kayttajanimi, sahkoposti, salasana, kayttajataso, luotu) VALUES(?,?,?,'1','1999-01-08')";
+        $sql = "INSERT INTO Kayttaja(kayttajanimi, sahkoposti, salasana, kayttajataso, luotu) VALUES(?,?,?,'2','1999-01-08')";
         $kysely = getTietokantayhteys()->prepare($sql);
-         $ok = $kysely->execute(array($this->kayttajanimi, $this->sahkoposti, $this->salasana        
-         ));
+        $ok = $kysely->execute(array($this->kayttajanimi, $this->sahkoposti, $this->salasana
+        ));
         if ($ok) {
             //Haetaan RETURNING-määreen palauttama id.
             //HUOM! Tämä toimii ainoastaan PostgreSQL-kannalla!
@@ -93,7 +94,7 @@ class Kayttaja {
         }
         return $ok;
     }
-    
+
     public function onkoKelvollinen() {
         if (strlen($this->kayttajanimi) > 30) {
             $this->virheet['nimipituus'] = "Nimi on liian pitkä";
@@ -105,7 +106,7 @@ class Kayttaja {
         } else {
             unset($this->virheet['salasana']);
         }
-        
+
         return empty($this->virheet);
     }
 
@@ -132,9 +133,25 @@ class Kayttaja {
     public function getSalasana() {
         return $this->salasana;
     }
-    
-    public function getVirheet(){
+
+    public function getVirheet() {
         return $this->virheet;
+    }
+
+    public function getKayttajataso() {
+        return $this->kayttajataso;
+    }
+
+    public function getLuotu() {
+        return $this->luotu;
+    }
+
+    public function setKayttajataso($kayttajataso) {
+        $this->kayttajataso = $kayttajataso;
+    }
+
+    public function setLuotu($luotu) {
+        $this->luotu = $luotu;
     }
 
 }

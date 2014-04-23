@@ -1,13 +1,12 @@
 <?php
-
 session_start();
+require_once 'libs/models/kayttaja.php';
 
-//if (!isset($_SESSION['kirjautunut'])) {
-//    naytaNakyma("login.php", array(
-//        'virhe' => "Kirjautumista ei ole olemassa",
-//    ));
-//    exit();
-//}
+$kirjautunutKayttaja = new Kayttaja();
+
+ if (isset($_SESSION['kayttaja'])) {
+    $kirjautunutKayttaja = $_SESSION['kayttaja'];
+  }
 
     function naytaNakyma($sivu, $data = array()) {
         $data = (object) $data;

@@ -3,19 +3,20 @@ session_start();
 require 'libs/common.php';
 require 'libs/models/drinkki_ainesosa.php';
 require_once 'libs/models/drinkki.php';
+require_once 'libs/models/ainesosa.php';
 
-$id = $_GET['id'];
+$drinkinid = $_GET['id'];
 $piiloID = $_POST["id"];
 
-if (empty($id)){
-    $id=$piiloID;
+if (empty($drinkinid)){
+    $drinkinid=$piiloID;
 }
 
-if (empty($id)) {
+if (empty($drinkinid)) {
    header('Location: drinkkilistaus.php');
 }
 
-$drinkki = drinkki::etsiDrinkkiID($id);
+$drinkki = drinkki::etsiDrinkkiID($drinkinid);
 $nimi = $drinkki->getNimi();
 
 $nakymannimi = "ainesosanLisaysDrinkkiin.php";
@@ -24,7 +25,7 @@ if (empty($_POST["lisattavaAinesosa"])) {
         /* Käytetään omassa kirjastotiedostossa määriteltyä näkymännäyttöfunktioita */
         naytaNakyma($nakymannimi, array(
             'nimi' => $nimi,
-            'id' => $id,
+            'id' => $drinkinid,
             'virhe' => "Anna ainesosan nimi"
         ));
         exit();
@@ -34,20 +35,35 @@ $ainesosannimi = $_POST["lisattavaAinesosa"];
 
 $ainesosaIDalkuperainen = Drinkki_ainesosa::muutaAinesosanNimimuotoonID($ainesosannimi);
 
-$drinkki_ainesosa = new Drinkki_ainesosa($ainesosaIDalkuperainen, $id);
+$kuvaus = $_POST["kuvaus"];
+
+$luotavaAinesosa = new Ainesosa($ainesosannimi, $kuvaus);
+
+if ($luotavaAinesosa->onkoKelvollinen()){
+    $luotavaAinesosa->lisaaKantaan();
+    
+    $_SESSION['ilmoitus'] = "Ainesosa lisätty onnistuneesti tietokantaan.";
+    
+    $haettuAinesosa = Ainesosa::etsiAinesosa($ainesosannimi);
+    
+    $ainesosaIDalkuperainen = $haettuAinesosa->getID();
+    
+}
+
+$drinkki_ainesosa = new Drinkki_ainesosa($ainesosaIDalkuperainen, $drinkinid);
 
 if ($drinkki_ainesosa->onkoKelvollinen()){
     $drinkki_ainesosa->lisaaKantaan();
     $_SESSION['ilmoitus'] = "Ainesosa on lisätty drinkkiin onnistuneesti.";
     naytaNakyma($nakymannimi, array(
             'nimi' => $nimi,
-            'id' => $id,
+            'id' => $drinkinid,
         ));
 }
 
 naytaNakyma($nakymannimi, array(
     'nimi' => $nimi,
-    'id' => $id,
+    'id' => $drinkinid,
             'virhe' => $drinkki_ainesosa->getVirheet()
         ));
 

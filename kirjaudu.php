@@ -3,7 +3,7 @@
   //  unset($_SESSION['kirjautunut']);
 
     require_once 'libs/kirjautumisCommon.php';
-    require 'libs/models/kayttaja.php';
+    require_once 'libs/models/kayttaja.php';
 //    require 'uloskirjautuminen.php';
 
     if (empty($_POST["username"]) || empty($_POST["password"])) {
@@ -34,7 +34,7 @@
 
     /* Tarkistetaan onko parametrina saatu oikeat tunnukset */
     if ($haettuKayttaja->getNimi() == $kayttaja && $haettuKayttaja->getSalasana() == $salasana) {
-        $_SESSION['kirjautunut'] = $haettuKayttajakayttaja;
+        $_SESSION['kayttaja'] = $haettuKayttaja;
         //   if ("1" == $kayttaja1 && "1" == $salasana1) {
         /* Jos tunnus on oikea, ohjataan käyttäjä sopivalla HTTP-otsakkeella kissalistaan. */
         header('Location: drinkkilistaus.php');

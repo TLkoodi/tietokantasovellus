@@ -20,12 +20,14 @@
                         <td>
                             <a href="ainesosaTieto.php?id=<?php echo  htmlspecialchars($ainesosa->getNimi()) ?>"><?php echo htmlspecialchars($ainesosa->getNimi()) ?></a>
                         </td>
-                        <td>                 
+                        <td>
+                            <?php if($data->taso === 1){?>
                             <form action="./muokkaaAinesosaa.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>" method="POST">
                                 <div class="col-md-offset-2 col-md-10">
                                     <button type="submit" class="btn btn-default">Muokkaa ainesosaa</button>
                                 </div>
                             </form>
+                            <?php } ?>
                         </td>
                         <td>
                             <form action="./poistaAinesosa.php?id=<?php echo htmlspecialchars($ainesosa->getID()) ?>" method="POST">
