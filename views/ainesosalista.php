@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<head>
-    <title>Ainesosat</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
 <body>
     <h1>Ainesosat</h1>
 
@@ -18,49 +13,43 @@
                 <?php foreach ($data->ainesosat as $ainesosa): ?>
                     <tr>
                         <td>
-                            <a href="ainesosaTieto.php?id=<?php echo  htmlspecialchars($ainesosa->getNimi()) ?>"><?php echo htmlspecialchars($ainesosa->getNimi()) ?></a>
+                            <a href="ainesosaTieto.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>"><?php echo htmlspecialchars($ainesosa->getNimi()) ?></a>
                         </td>
                         <td>
-                            <?php if($data->taso === 1){?>
-                            <form action="./muokkaaAinesosaa.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>" method="POST">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-default">Muokkaa ainesosaa</button>
-                                </div>
-                            </form>
-                            <?php } ?>
-                        </td>
-                        <td>
-                            <form action="./poistaAinesosa.php?id=<?php echo htmlspecialchars($ainesosa->getID()) ?>" method="POST">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-default">Poista ainesosa</button>
-                                </div>
+                            <?php if ($data->taso === 1) { ?>
+                                <form action="./muokkaaAinesosaa.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>" method="POST">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default">Muokkaa ainesosaa</button>
+                                    </div>
+                                </form>
 
-                            </form>
+                            </td>
+                        <?php } ?>
+                        <td>
+                            <?php if ($data->taso == 1) { ?>
+                                <form action="./poistaAinesosa.php?id=<?php echo htmlspecialchars($ainesosa->getID()) ?>" method="POST">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default">Poista ainesosa</button>
+                                    </div>
+
+                                </form>
+                            <?php } ?>
                         </td>
                     </tr>
                 <?php endforeach; ?>
-                
-                    <td>
-                        <form action="lisaaainesosa.php" method="POST">
-                            <div class="col-md-10">
-                                <button type="submit" class="btn btn-default">Lisää ainesosa</button>
-                            </div>
+                <?php if ($data->taso == 1) { ?>
+                <td>
+                    <form action="lisaaainesosa.php" method="POST">
+                        <div class="col-md-10">
+                            <button type="submit" class="btn btn-default">Lisää ainesosa</button>
+                        </div>
 
-                        </form></td><td><td></td></td></tr>
+                    </form></td>
+            <?php } ?>
+            <td><td></td></td></tr>
             </tbody>
         </table>
     </div>
-
-    <?php if (!empty($_SESSION['ilmoitus'])): ?>
-        <div class="alert alert-danger">
-            <?php echo $_SESSION['ilmoitus']; ?>
-        </div>
-        <?php
-        // Samalla kun viesti näytetään, se poistetaan istunnosta,
-        // ettei se näkyisi myöhemmin jollain toisella sivulla uudestaan.
-        unset($_SESSION['ilmoitus']);
-    endif;
-    ?>
 
     <?php if ($data->sivu > 1):
         ?>

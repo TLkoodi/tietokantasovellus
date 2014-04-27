@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <body>
     <h1>Lisää ainesosa drinkkiin <?php echo $data->nimi; ?></h1>
     <div class="pure-form pure-form-stacked">

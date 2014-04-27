@@ -4,6 +4,8 @@ require 'libs/common.php';
 require 'libs/models/drinkki_ainesosa.php';
 require_once 'libs/models/drinkki.php';
 require_once 'libs/models/ainesosa.php';
+require_once 'libs/models/kayttaja.php';
+require 'libs/onkoAdmin.php';
 
 $drinkinid = $_GET['id'];
 $piiloID = $_POST["id"];
@@ -26,6 +28,7 @@ if (empty($_POST["lisattavaAinesosa"])) {
         naytaNakyma($nakymannimi, array(
             'nimi' => $nimi,
             'id' => $drinkinid,
+            'kuvaus' => $_POST["kuvaus"],
             'virhe' => "Anna ainesosan nimi"
         ));
         exit();
@@ -63,6 +66,8 @@ if ($drinkki_ainesosa->onkoKelvollinen()){
 
 naytaNakyma($nakymannimi, array(
     'nimi' => $nimi,
+    $ainesosannimi = $_POST["lisattavaAinesosa"],
+    'kuvaus' => $_POST["kuvaus"],
     'id' => $drinkinid,
             'virhe' => $drinkki_ainesosa->getVirheet()
         ));

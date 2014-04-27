@@ -2,15 +2,22 @@
 session_start();
 require_once 'libs/models/kayttaja.php';
 
-$kirjautunutKayttaja = new Kayttaja();
+if (!isset($_SESSION['kayttaja'])) {
+    header('Location: uloskirjautuminen.php');
+}
 
- if (isset($_SESSION['kayttaja'])) {
-    $kirjautunutKayttaja = $_SESSION['kayttaja'];
-  }
+$kirjautunutKayttaja = $_SESSION['kayttaja'];
 
-    function naytaNakyma($sivu, $data = array()) {
-        $data = (object) $data;
-        require 'views/pohja.php';
+//$nimi = $kirjautunutKayttaja->getNimi();
+$loytyykoKayttaja = Kayttaja::etsiKayttajanimi($kirjautunutKayttaja);
 
-        exit();
-    }
+if ($loytyykoKayttaja == null) {
+    header('Location: uloskirjautuminen.php');
+}
+
+function naytaNakyma($sivu, $data = array()) {
+    $data = (object) $data;
+    require 'views/pohja.php';
+
+    exit();
+}

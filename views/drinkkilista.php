@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<head>
-    <title>Drinkit</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width">
-</head>
 <body>
     <h1>Drinkit</h1>
 
@@ -12,53 +7,55 @@
             <thead>
                 <tr>
                     <th>Drinkin nimi</th>
+                    <th>Lisännyt</th>
                 </tr>
             </thead>
+            <?php if (empty($data->drinkit)){?>
+            <div class="alert alert-danger">Drinkkejä ei löytynyt</div>
+            <?php } ?>
             <tbody>
                 <?php foreach ($data->drinkit as $drinkki): ?>
                     <tr>
                         <td>
-                            <a href="drinkkiTieto.php?id=<?php echo  htmlspecialchars($drinkki->getNimi()) ?>"><?php echo htmlspecialchars($drinkki->getNimi()) ?></a>
-                        </td>
-                        <td>                 
-                            <form action="./muokkaaDrinkkia.php?id=<?php echo htmlspecialchars($drinkki->getNimi()) ?>" method="POST">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-default">Muokkaa drinkkiä</button>
-                                </div>
-                            </form>
+                            <a href="drinkkiTieto.php?id=<?php echo htmlspecialchars($drinkki->getNimi()) ?>"><?php echo htmlspecialchars($drinkki->getNimi()) ?></a>
                         </td>
                         <td>
-                            <form action="./poistaDrinkki.php?id=<?php echo htmlspecialchars($drinkki->getID()) ?>" method="POST">
-                                <div class="col-md-offset-2 col-md-10">
-                                    <button type="submit" class="btn btn-default">Poista drinkki</button>
-                                </div>
-
-                            </form>
+                            <?php echo htmlspecialchars($drinkki->getKayttajanimi()) ?>
                         </td>
+                        <?php if ($data->taso == 1) { ?>
+                            <td>
+
+                                <form action="./muokkaaDrinkkia.php?id=<?php echo htmlspecialchars($drinkki->getNimi()) ?>" method="POST">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default">Muokkaa drinkkiä</button>
+                                    </div>
+                                </form>
+                            </td>
+                        <?php } if ($data->taso === 1) { ?>
+                            <td>
+                                <form action="./poistaDrinkki.php?id=<?php echo htmlspecialchars($drinkki->getID()) ?>" method="POST">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-default">Poista drinkki</button>
+                                    </div>
+
+                                </form>
+                            </td>
+                        <?php } ?>
                     </tr>
                 <?php endforeach; ?>
-                
-                    <td>
-                        <form action="lisaadrinkki.php" method="POST">
-                            <div class="col-md-10">
-                                <button type="submit" class="btn btn-default">Lisää drinkki</button>
-                            </div>
 
-                        </form></td><td><td></td></td></tr>
+                <?php if ($data->taso === 1) { ?>
+                <td>
+                    <form action="lisaadrinkki.php" method="POST">
+                        <div class="col-md-10">
+                            <button type="submit" class="btn btn-default">Lisää drinkki</button>
+                        </div>
+
+                    </form></td>
+            <?php } ?>
             </tbody>
         </table>
     </div>
-
-    <?php if (!empty($_SESSION['ilmoitus'])): ?>
-        <div class="alert alert-danger">
-            <?php echo $_SESSION['ilmoitus']; ?>
-        </div>
-        <?php
-        // Samalla kun viesti näytetään, se poistetaan istunnosta,
-        // ettei se näkyisi myöhemmin jollain toisella sivulla uudestaan.
-        unset($_SESSION['ilmoitus']);
-    endif;
-    ?>
 
     <?php if ($data->sivu > 1):
         ?>
@@ -69,7 +66,17 @@
     <?php endif; ?>
 
     <p>
-        Yhteensä <?php echo $data->DrinkkiLkm; ?> ainesosaa. 
+        <form action="drinkkiHaku.php" method="POST">
+                    <div class="form-group">
+                        <label for="inputText" class="col-md-2 control-label">Hae drinkkiä</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="hakusana" name="hakusana" placeholder="Drinkki" value="">
+                        </div>
+                    </div>
+        </form>
+        <?php if (!empty($data->DrinkkiLkm) && !empty($data->sivu)){?>
+        Yhteensä <?php echo $data->DrinkkiLkm; ?> drinkkiä. 
         Olet sivulla <?php echo $data->sivu; ?>/<?php echo $data->sivuja; ?>.
+        <?php } ?>
 </body>
 </html>

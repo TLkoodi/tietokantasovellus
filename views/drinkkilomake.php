@@ -1,8 +1,5 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Lisää drinkki</title>
-    </head>
+<html>  
+    <h1>Lisää drinkki</h1>
     <body>
         <div class="container">
 
@@ -11,6 +8,12 @@
                         <label for="inputText" class="col-md-2 control-label">Drinkin nimi</label>
                         <div class="col-md-10">
                             <input type="text" class="form-control" id="username" name="nimi" placeholder="Text" value="<?php echo htmlspecialchars($data->drinkki); ?>">
+                        </div>
+                    </div>
+                <div class="form-group">
+                        <label for="inputText" class="col-md-2 control-label">Lempinimet</label>
+                        <div class="col-md-10">
+                            <input type="text" class="form-control" id="nicknames" name="lempinimet" placeholder="Lempinimet" value="<?php echo htmlspecialchars($data->lempinimet); ?>">
                         </div>
                     </div>
                     <div class="form-group">

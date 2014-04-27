@@ -30,13 +30,20 @@
     endif;
     ?>
 
-    <?php if (!empty($data->virhe)): ?>
-        <?php foreach ($data->virhe as $virhe):
+    <?php if (!empty($data->virhe)) { 
+        if (is_array($data->virhe)) {
+            foreach ($data->virhe as $virhe):
+                ?>
+                <div class="alert alert-danger"><?php echo $virhe; ?></div>
+                <?php
+            endforeach;
+            unset($data->virhe);
+        } else {
             ?>
-            <div class="alert alert-danger"><?php echo $virhe; ?></div>
+            <div class="alert alert-danger"><?php echo $data->virhe; ?></div>
             <?php
-        endforeach;
-        unset($data->virhe);
-    endif;
+        }
+    }
     ?>
+
 </html>

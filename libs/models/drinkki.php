@@ -44,7 +44,7 @@ class Drinkki {
     }
 
     public static function etsiDrinkki($haettuDrinkki) {
-        $sql = "SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where nimi = ? LIMIT 1";
+        $sql = "SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where UPPER(nimi) = UPPER(?) LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($haettuDrinkki));
 
@@ -60,6 +60,61 @@ class Drinkki {
             return $drinkki;
         }
     }
+    
+    public static function etsiDrinkit($haettuDrinkki) {
+        $sql = "SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where UPPER(nimi) LIKE UPPER(?)";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $haku= "%$haettuDrinkki%";
+        $kysely->execute(array($haku));
+        
+        $tulokset = array();
+
+        foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
+            $drinkki = new Drinkki($tulos->nimi, $tulos->valmistusohje);
+            $drinkki->setID($tulos->drinkkiID);
+            $drinkki->setLempinimet($tulos->lempinimet);
+            $drinkki->setMuokattu($tulos->muokattu);
+            $drinkki->setKayttajanimi($tulos->kayttajanimi);
+            
+            $tulokset[] = $drinkki;
+        }
+        
+        $lempinimiDrinkit = Drinkki::etsiLempinimet($haettuDrinkki);
+        
+       foreach ($lempinimiDrinkit as $lempinimiDrinkki){
+           $tulokset[] = $lempinimiDrinkki;
+        }
+
+        foreach ($tulokset as $drinkki) {
+            echo $drinkki->drinkki;
+
+            return $tulokset;
+        }
+    }
+    
+    public static function etsiLempinimet($haettuDrinkki) {
+        $haku = "%$haettuDrinkki%";
+        $sql = "SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where UPPER(lempinimet) LIKE UPPER(?)";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($haku));
+
+        foreach ($kysely->fetchAll(PDO::FETCH_OBJ) as $tulos) {
+            $drinkki = new Drinkki($tulos->nimi, $tulos->valmistusohje);
+            $drinkki->setID($tulos->drinkkiID);
+            $drinkki->setLempinimet($tulos->lempinimet);
+            $drinkki->setMuokattu($tulos->muokattu);
+            $drinkki->setKayttajanimi($tulos->kayttajanimi);
+            
+            $tulokset[] = $drinkki;
+        }
+
+        foreach ($tulokset as $drinkki) {
+            echo $drinkki->drinkki;
+
+            return $tulokset;
+        }
+    }
+    
     
     public static function etsiDrinkkiID($haettuID) {
         $sql = "SELECT drinkkiID, nimi, lempinimet, valmistusohje, muokattu, kayttajanimi FROM Drinkki where drinkkiID = ? LIMIT 1";

@@ -1,8 +1,5 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Muokkaa ainesosaa</title>
-    </head>
+    <h1>Muokkaa ainesosaa</h1>
     <body>
         <div class="container">
 

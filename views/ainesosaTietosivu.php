@@ -20,6 +20,7 @@
                         <td>
                             <a href="drinkkiTieto.php?id=<?php echo  htmlspecialchars($drinkki->getNimi()) ?>"><?php echo htmlspecialchars($drinkki->getNimi()) ?></a>
                         </td>
+                        <?php if ($data->taso == 1) { ?>
                         <td>                 
                             <form action="./muokkaaDrinkkia.php?id=<?php echo htmlspecialchars($drinkki->getNimi()) ?>" method="POST">
                                 <div class="col-md-offset-2 col-md-10">
@@ -27,7 +28,7 @@
                                 </div>
                             </form>
                         </td>
-                        
+                        <?php } ?>
                     </tr>
                 <?php endforeach; ?>
         </tbody>

@@ -1,10 +1,11 @@
 <?php
-
 session_start();
 require 'libs/common.php';
 require_once 'libs/models/ainesosa.php';
 require_once 'libs/models/drinkki_ainesosa.php';
 require_once 'libs/models/drinkki.php';
+
+$taso = $_SESSION['kayttajataso'];
 
 $ainesosanNimi = $_GET['id'];
 
@@ -17,7 +18,8 @@ if ($ainesosa != null) {
         'nimi' => $ainesosanNimi,
         'kuvaus' => $ainesosa->getKuvaus(),
         'drinkit' => $drinkit,
-        'id' => $ainesosa->getID()
+        'id' => $ainesosa->getID(),
+        'taso' => $taso
     ));
 } else {
     naytaNakyma("ainesosaTietosivu.php", array(

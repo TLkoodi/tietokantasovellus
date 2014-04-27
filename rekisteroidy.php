@@ -23,6 +23,7 @@ if (!empty($onkoOlemassa)) {
 }
 
 $uusikayttaja = new Kayttaja($kayttaja, $sahkoposti, $salasana, 2, 1);
+$uusikayttaja->setKayttajataso(2);
 
 if ($uusikayttaja->onkoKelvollinen()) {
     $uusikayttaja->lisaaKantaan();

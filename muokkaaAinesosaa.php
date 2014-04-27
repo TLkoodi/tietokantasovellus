@@ -1,8 +1,8 @@
 <?php
-
 session_start();
 require 'libs/common.php';
 require 'libs/models/ainesosa.php';
+require 'libs/onkoAdmin.php';
 
 $id = $_GET['id'];
 

@@ -2,6 +2,7 @@
 session_start();
 require 'libs/common.php';
 require 'libs/models/drinkki.php';
+require 'libs/onkoAdmin.php';
 
 $id = $_GET['id'];
 

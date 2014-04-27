@@ -3,11 +3,11 @@
     <h1><?php echo htmlspecialchars($data->nimi) ?></h1>
 
     <div>
-        <?php echo htmlspecialchars($data->lempinimet) ?>
+        <b>Lempinimet:</b> <?php echo htmlspecialchars($data->lempinimet) ?>
     </div>
 
     <div>
-        <?php echo htmlspecialchars($data->valmistusohje) ?>
+        <b>Resepti:</b> <?php echo htmlspecialchars($data->valmistusohje) ?>
     </div>
 
     <div>
@@ -29,6 +29,7 @@
             <td>
                 <a href="ainesosaTieto.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>"><?php echo htmlspecialchars($ainesosa->getNimi()) ?></a>
             </td>
+            <?php if ($data->taso == 1) { ?>
             <td>                 
                 <form action="./muokkaaAinesosaa.php?id=<?php echo htmlspecialchars($ainesosa->getNimi()) ?>" method="POST">
                     <div class="col-md-offset-2 col-md-10">
@@ -36,6 +37,7 @@
                     </div>
                 </form>
             </td>
+            <?php } ?>
         </tr>
     <?php endforeach; ?>
 

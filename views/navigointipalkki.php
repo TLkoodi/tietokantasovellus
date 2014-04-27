@@ -2,6 +2,9 @@
 <nav>
     <a href="./drinkkilistaus.php">Drinkit</a>
     <a href="./ainesosalistaus.php">Ainesosat</a>
-    <a href="./kirjaudu.php">Kirjaudu ulos</a>
+    <?php if ($_SESSION['kayttajataso'] == 1){ ?>
+        <a href="./kayttajalistaus.php">Käyttäjälistaus</a>
+    <?php } ?>
+    <a href="./uloskirjautuminen.php">Kirjaudu ulos</a>
 </nav>
 </html>

@@ -1,8 +1,5 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Muokkaa drinkkiä</title>
-    </head>
+    <h1>Muokkaa drinkkiä</h1>
     <body>
         <div class="container">
 
@@ -12,6 +9,14 @@
                     <div class="col-md-10">
                         <input type="text" class="form-control" id="username" name="muokattavaNimi" placeholder="Text" value="<?php echo htmlspecialchars($data->drinkki->getNimi()); ?>">
                     </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputText" class="col-md-2 control-label">Lempinimet</label>
+                    <div class="col-md-10">
+                        <input type="text" class="form-control" id="nicknames" name="muokattavaLempinimet" placeholder="lempinimet"value="<?php echo htmlspecialchars($data->drinkki->getLempinimet); ?>">
+                    </div>
+
+                    <input type="hidden" name="id" value="<?php echo $data->drinkki->getID(); ?>">
                 </div>
                 <div class="form-group">
                     <label for="inputText" class="col-md-2 control-label">valmistusohje</label>

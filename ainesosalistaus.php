@@ -1,6 +1,10 @@
 <?php
+session_start();
+
 require 'libs/common.php';
 require 'libs/models/ainesosa.php';
+
+$taso = $_SESSION['kayttajataso'];
 
 $sivu = 1;
 if (isset($_GET['sivu'])) {
@@ -22,5 +26,5 @@ $serial=Ainesosa::isoinSerial();
 
 <?php
 naytaNakyma('ainesosalista.php', array(
-    'ainesosat' => $ainesosat, 'sivu' => $sivu, 'AinesosaLkm' => $AinesosaLkm, 'sivuja' => $sivuja, 'serial' => $serial));
+    'ainesosat' => $ainesosat, 'sivu' => $sivu, 'AinesosaLkm' => $AinesosaLkm, 'sivuja' => $sivuja, 'serial' => $serial,'taso' => $taso));
 ?>

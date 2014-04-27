@@ -1,8 +1,5 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Lisää tuote</title>
-    </head>
+    <h1>Lisää ainesosa</h1>
     <body>
         <div class="container">
 

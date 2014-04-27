@@ -27,7 +27,7 @@ class Kayttaja {
     }
 
     public static function etsiKayttajaTunnuksilla($haettuKayttaja, $haettuSalasana) {
-        $sql = "SELECT kayttajanimi, salasana FROM Kayttaja where kayttajanimi = ? AND salasana = ? LIMIT 1";
+        $sql = "SELECT kayttajanimi, salasana, kayttajataso FROM Kayttaja where kayttajanimi = ? AND salasana = ? LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($haettuKayttaja, $haettuSalasana));
 
@@ -38,13 +38,14 @@ class Kayttaja {
             $kayttaja = new Kayttaja();
             $kayttaja->setKayttajanimi($tulos->kayttajanimi);
             $kayttaja->setSalasana($tulos->salasana);
+            $kayttaja->setKayttajataso($tulos->kayttajataso);
 
             return $kayttaja;
         }
     }
 
     public static function etsiKayttajanimi($haettuKayttaja) {
-        $sql = "SELECT kayttajanimi FROM Kayttaja where kayttajanimi = ? LIMIT 1";
+        $sql = "SELECT kayttajanimi, kayttajataso, sahkoposti, salasana FROM Kayttaja where kayttajanimi = ? LIMIT 1";
         $kysely = getTietokantayhteys()->prepare($sql);
         $kysely->execute(array($haettuKayttaja));
 
@@ -52,7 +53,13 @@ class Kayttaja {
         if ($tulos == null) {
             return null;
         } else {
-            return $tulos;
+            $kayttaja = new Kayttaja();
+            $kayttaja->setKayttajanimi($tulos->kayttajanimi);
+            $kayttaja->setKayttajaTaso($tulos->kayttajataso);
+            $kayttaja->setSahkoposti($tulos->sahkoposti);
+            $kayttaja->setSalasana($tulos->salasana);
+
+            return $kayttaja;
         }
     }
 
@@ -67,25 +74,21 @@ class Kayttaja {
             $kayttaja->setKayttajanimi($tulos->kayttajanimi);
             $kayttaja->setSahkoposti($tulos->sahkoposti);
 //            $kayttaja->setSalanana($tulos->salasana);
-//            $kayttaja->setKayttajataso($tulos->kayttajataso);
+            $kayttaja->setKayttajataso($tulos->kayttajataso);
 //            $kayttaja->setLuotu($tulos->luotu);
             //$array[] = $muuttuja; lisää muuttujan arrayn perään. 
             //Se vastaa melko suoraan ArrayList:in add-metodia.
             $tulokset[] = $kayttaja;
         }
 
-        echo $tulokset;
-        foreach ($tulokset as $kayttajanimi) {
-            echo $kayttajanimi->kayttajanimi;
-
             return $tulokset;
         }
-    }
+    
 
     public function lisaaKantaan() {
-        $sql = "INSERT INTO Kayttaja(kayttajanimi, sahkoposti, salasana, kayttajataso, luotu) VALUES(?,?,?,'2','1999-01-08')";
+        $sql = "INSERT INTO Kayttaja(kayttajanimi, sahkoposti, salasana, kayttajataso, luotu) VALUES(?,?,?,?,'1999-01-08')";
         $kysely = getTietokantayhteys()->prepare($sql);
-        $ok = $kysely->execute(array($this->kayttajanimi, $this->sahkoposti, $this->salasana
+        $ok = $kysely->execute(array($this->kayttajanimi, $this->sahkoposti, $this->salasana, $this->kayttajataso
         ));
         if ($ok) {
             //Haetaan RETURNING-määreen palauttama id.
@@ -94,8 +97,20 @@ class Kayttaja {
         }
         return $ok;
     }
+    
+    public static function poistaKayttaja($poistettavaNimi){
+         $sql = "DELETE FROM Kayttaja WHERE kayttajanimi = ?";
+        $kysely = getTietokantayhteys()->prepare($sql);
+        $kysely->execute(array($poistettavaNimi));
+    }
 
     public function onkoKelvollinen() {
+        $loytyiko = Kayttaja::etsiKayttajanimi($this->nimi);
+        if ($loytyiko != null) {
+            $this->virheet['nimi'] = "nimi on jo varattu.";
+        } else {
+            unset($this->virheet['nimi']);
+        }
         if (strlen($this->kayttajanimi) > 30) {
             $this->virheet['nimipituus'] = "Nimi on liian pitkä";
         } else {

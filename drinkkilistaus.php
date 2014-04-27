@@ -1,9 +1,9 @@
 <?php
 require 'libs/common.php';
 require_once 'libs/models/drinkki.php';
-require 'libs/models/kayttaja.php';
+//require_once 'libs/models/kayttaja.php';
 
-$taso = $kirjautunutKayttaja->getKayttajataso();
+$taso = $_SESSION['kayttajataso'];
 
 $sivu = 1;
 if (isset($_GET['sivu'])) {
@@ -20,9 +20,7 @@ $drinkit= Drinkki::getDrinkitSivulla($sivu, $montakodrinkkia);
 $DrinkkiLkm=Drinkki::lukumaara();
 $sivuja = ceil($DrinkkiLkm / $montakodrinkkia);
 $serial=Drinkki::isoinSerial();
-?>
 
-<?php
 naytaNakyma('drinkkilista.php', array(
     'drinkit' => $drinkit, 'sivu' => $sivu, 'DrinkkiLkm' => $DrinkkiLkm, 'sivuja' => $sivuja, 'serial' => $serial, 'taso' => $taso));
 ?>

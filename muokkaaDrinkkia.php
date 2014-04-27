@@ -1,8 +1,8 @@
 <?php
-
 session_start();
 require 'libs/common.php';
 require 'libs/models/drinkki.php';
+require 'libs/onkoAdmin.php';
 
 $nimi = $_GET['id'];
 
@@ -19,10 +19,12 @@ if (empty($_POST["muokattavaNimi"]) || empty($_POST["muokattavaValmistusohje"]))
 
 $muokattavanimi = $_POST["muokattavaNimi"];
 $muokattavaValmistusohje = $_POST["muokattavaValmistusohje"];
+$muokattavaLempinimet = $_POST["muokkattavaLempinimet"];
 $muokattavaid = $_POST["id"];
 
 $uusidrinkki->setNimi($muokattavanimi);
 $uusidrinkki->setValmistusohje($muokattavaValmistusohje);
+$uusidrinkki->setLempinimet($muokattavaLempinimet);
 $uusidrinkki->setID($muokattavaid);
 
 if ($uusidrinkki->onkoKelvollinenMuokattavaksi()) {
